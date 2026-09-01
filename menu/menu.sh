@@ -9,7 +9,7 @@ domain=$(cat /etc/xray/domain 2>/dev/null || echo "N/A")
 uptime="$(uptime -p 2>/dev/null | cut -d ' ' -f 2-10 || echo "N/A")"
 VERSION_FILE="/etc/version"
 INSTALLED_VERSION=$(cat "$VERSION_FILE" 2>/dev/null || echo "1.0.0")
-readonly SERVER_HOST="https://raw.githubusercontent.com/ILYASSSE237/TOM_TUNNEL/main"
+readonly SERVER_HOST="https://raw.githubusercontent.com/ILYASSE237/TOM_TUNNEL/main"
 LATEST_VERSION=$(curl -fsS --max-time 4 "$SERVER_HOST/version" 2>/dev/null || echo "$INSTALLED_VERSION")
 UPDATE_AVAILABLE=0
 version_greater(){ [ "$(printf '%s\n%s\n' "$1" "$2" | sort -V | tail -n1)" = "$1" ] && [ "$1" != "$2" ]; }
