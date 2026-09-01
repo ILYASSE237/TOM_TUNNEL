@@ -1,4 +1,3 @@
-cat > /root/autoinstall.sh << 'EOF'
 #!/bin/bash
 # TOM_TUNNEL — Auto Installer
 clear
@@ -14,27 +13,25 @@ echo "precedence ::ffff:0:0/96  100" >> /etc/gai.conf 2>/dev/null || true
 sysctl -w net.ipv6.conf.all.disable_ipv6=1 >/dev/null 2>&1 || true
 sysctl -w net.ipv6.conf.default.disable_ipv6=1 >/dev/null 2>&1 || true
 
-SERVER_HOST="https://raw.githubusercontent.com/ILYASSE237/TOM_TUNNEL/main"
-SCRIPT_DIR=\( (cd " \)(dirname "$0")" 2>/dev/null && pwd)
+SERVER_HOST="https://raw.githubusercontent.com/ILYASSSE237/TOM_TUNNEL/main"
+SCRIPT_DIR="$(cd "$(dirname "$0")" 2>/dev/null && pwd)"
 
 echo "[+] Connexion au dépôt TOM_TUNNEL..."
-
 if [ -f "$SCRIPT_DIR/tom_tunnel.sh" ]; then
-    cp "$SCRIPT_DIR/tom_tunnel.sh" /root/tom_tunnel.sh
+  cp "$SCRIPT_DIR/tom_tunnel.sh" /root/tom_tunnel.sh
 elif [ -f ./tom_tunnel.sh ]; then
-    cp ./tom_tunnel.sh /root/tom_tunnel.sh
+  cp ./tom_tunnel.sh /root/tom_tunnel.sh
 else
-    wget -q --timeout=30 --tries=3 -O /root/tom_tunnel.sh "$SERVER_HOST/tom_tunnel.sh"
+  wget -qO /root/tom_tunnel.sh "$SERVER_HOST/tom_tunnel.sh" 2>/dev/null
 fi
 
 if [ -f /root/tom_tunnel.sh ]; then
     echo "[+] Fichier noyau OK. Lancement..."
     chmod +x /root/tom_tunnel.sh
-
+    # Also copy full package next to installer for offline install
     if [ -d "$SCRIPT_DIR/menu" ]; then
-        export TOM_TUNNEL_SRC="$SCRIPT_DIR"
+      export TOM_TUNNEL_SRC="$SCRIPT_DIR"
     fi
-
     if [ -r /dev/tty ]; then
         exec bash /root/tom_tunnel.sh </dev/tty
     else
@@ -44,4 +41,3 @@ else
     echo "[-] ERREUR: tom_tunnel.sh introuvable."
     exit 1
 fi
-EOF
