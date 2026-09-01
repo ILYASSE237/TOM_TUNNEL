@@ -17,7 +17,7 @@ CONFIG_DIR="/etc/tom_tunnel-vpn-web"
 CONFIG_FILE="$CONFIG_DIR/config.json"
 SERVICE="tom_tunnel-web"
 INSTALL_SH="$TOM_TUNNEL_WEB_DIR/install.sh"
-TOM_TUNNEL_REPO_URL="https://github.com/ILYASSSE237/TOM_TUNNEL.git"
+TOM_TUNNEL_REPO_URL="https://github.com/ILYASSE237/TOM_TUNNEL.git"
 TMP_WEB_SRC="/tmp/tom_tunnel-web-src-$$"
 
 # ─── Helpers ──────────────────────────────────────────────────────────────────
