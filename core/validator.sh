@@ -1,5 +1,5 @@
 UI="/usr/local/lib/tom_tunnel-ui.sh"; [ -f "$UI" ] && source "$UI"
-export SERVER_HOST="https://raw.githubusercontent.com/ILYASSSE237/TOM_TUNNEL/main"
+export SERVER_HOST="https://raw.githubusercontent.com/ILYASSE237/TOM_TUNNEL/main"
 CONF_DIR="/etc/nginx"
 configure_nginx() {
 echo "Downloading nginx xray conf..."
