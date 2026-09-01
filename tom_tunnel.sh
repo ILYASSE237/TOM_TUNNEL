@@ -10,7 +10,7 @@ UI_LOCAL="/usr/local/lib/tom_tunnel-ui.sh"
 if [ -f "$UI_LOCAL" ]; then source "$UI_LOCAL"; fi
 
 # --- CONFIGURATION DU DÉPÔT CENTRAL (CORRIGÉ) ---
-readonly SERVER_HOST="https://raw.githubusercontent.com/ILYASSSE237/TOM_TUNNEL/main"
+readonly SERVER_HOST="https://raw.githubusercontent.com/ILYASSE237/TOM_TUNNEL/main"
 readonly TIMEZONE="Africa/Douala"
 
 check_os() {
