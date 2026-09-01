@@ -13,7 +13,7 @@ echo "precedence ::ffff:0:0/96  100" >> /etc/gai.conf 2>/dev/null || true
 sysctl -w net.ipv6.conf.all.disable_ipv6=1 >/dev/null 2>&1 || true
 sysctl -w net.ipv6.conf.default.disable_ipv6=1 >/dev/null 2>&1 || true
 
-SERVER_HOST="https://raw.githubusercontent.com/ILYASSE237/TOM_TUNNEL/main"
+SERVER_HOST="https://raw.githubusercontent.com/ILYASSSE237/TOM_TUNNEL/main"
 SCRIPT_DIR="$(cd "$(dirname "$0")" 2>/dev/null && pwd)"
 
 echo "[+] Connexion au dépôt TOM_TUNNEL..."
