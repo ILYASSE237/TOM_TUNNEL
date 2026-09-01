@@ -1,6 +1,6 @@
 UI="/usr/local/lib/tom_tunnel-ui.sh"; [ -f "$UI" ] && source "$UI"
 [ -f "$UI" ] && k_header "TOM_TUNNEL • SETUP_UDP" || clear
-export SERVER_HOST="https://raw.githubusercontent.com/ILYASSSE237/TOM_TUNNEL/main"
+export SERVER_HOST="https://raw.githubusercontent.com/ILYASSE237/TOM_TUNNEL/main"
 export UDP_DIR="/etc/udp-custom"
 export SERVICE_FILE="/etc/systemd/system/udp-custom.service"
 update_system() {
