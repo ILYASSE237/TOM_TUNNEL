@@ -12,7 +12,7 @@ fi
 PROXY_JS="/usr/local/sbin/proxy3.js"
 if [[ ! -f "$PROXY_JS" ]]; then
 echo "[ERROR] $PROXY_JS not found. Downloading..."
-wget -q -O "$PROXY_JS" "https://raw.githubusercontent.com/ILYASSSE237/TOM_TUNNEL/main/module/proxy3.js"
+wget -q -O "$PROXY_JS" "https://raw.githubusercontent.com/ILYASSE237/TOM_TUNNEL/main/module/proxy3.js"
 chmod 644 "$PROXY_JS"
 else
 echo "[INFO] PROXY_JS already installed."
