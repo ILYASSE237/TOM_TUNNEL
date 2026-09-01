@@ -1,3 +1,4 @@
+cat > /root/autoinstall.sh << 'EOF'
 #!/bin/bash
 # TOM_TUNNEL — Auto Installer
 clear
@@ -14,8 +15,6 @@ sysctl -w net.ipv6.conf.all.disable_ipv6=1 >/dev/null 2>&1 || true
 sysctl -w net.ipv6.conf.default.disable_ipv6=1 >/dev/null 2>&1 || true
 
 SERVER_HOST="https://raw.githubusercontent.com/ILYASSE237/TOM_TUNNEL/main"
-
-# Récupération du dossier du script (version simple et robuste)
 SCRIPT_DIR=\( (cd " \)(dirname "$0")" 2>/dev/null && pwd)
 
 echo "[+] Connexion au dépôt TOM_TUNNEL..."
@@ -45,3 +44,4 @@ else
     echo "[-] ERREUR: tom_tunnel.sh introuvable."
     exit 1
 fi
+EOF
