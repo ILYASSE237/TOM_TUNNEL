@@ -92,9 +92,10 @@ fi
 echo
 
 # =========================
-# PROTOCOL MENU
+# MENU PRINCIPAL (nouvelle présentation colorée)
 # =========================
 
+# --- Protocoles ---
 printf '%b\n' "${K_CYAN}┏━━━━━━━━━━━━━━━━━━ 🚀 MENU TOM_TUNNEL ━━━━━━━━━━━━━━━━━━┓${K_RESET}"
 printf '%b\n' "${K_CYAN}┃${K_RESET} ${K_WHITE}[01]${K_RESET} 🔐 SSH/WS MENU      ${K_WHITE}[02]${K_RESET} 🌐 VMESS MENU       ${K_CYAN}┃${K_RESET}"
 printf '%b\n' "${K_CYAN}┃${K_RESET} ${K_WHITE}[03]${K_RESET} 🛡️  VLESS MENU      ${K_WHITE}[04]${K_RESET} 🔥 TROJAN MENU      ${K_CYAN}┃${K_RESET}"
@@ -103,34 +104,25 @@ printf '%b\n' "${K_CYAN}┗━━━━━━━━━━━━━━━━━�
 
 echo
 
-# =========================
-# TOOLS
-# =========================
-
+# --- Outils ---
 printf '%b\n' "${K_YELLOW}┏━━━━━━━━━━━━━━━━━━ 🛠️  TOOLS TOM_TUNNEL ━━━━━━━━━━━━━━━━━━┓${K_RESET}"
 printf '%b\n' "${K_YELLOW}┃${K_RESET} ${K_WHITE}[07]${K_RESET} 📡 DNS PANEL        ${K_WHITE}[08]${K_RESET} 🌐 DOMAIN PANEL     ${K_YELLOW}┃${K_RESET}"
 printf '%b\n' "${K_YELLOW}┃${K_RESET} ${K_WHITE}[09]${K_RESET} 6️⃣  IPV6 PANEL      ${K_WHITE}[10]${K_RESET} 📊 VPS STATUS       ${K_YELLOW}┃${K_RESET}"
 printf '%b\n' "${K_YELLOW}┃${K_RESET} ${K_WHITE}[11]${K_RESET} 🛡️  NETGUARD PANEL   ${K_WHITE}[12]${K_RESET} 🔌 VPN PORT INFO    ${K_YELLOW}┃${K_RESET}"
 printf '%b\n' "${K_YELLOW}┃${K_RESET} ${K_WHITE}[13]${K_RESET} 🧹 CLEAN VPS LOGS   ${K_WHITE}[14]${K_RESET} 🤖 TOM_TUNNEL BOT   ${K_YELLOW}┃${K_RESET}"
-printf '%b\n' "${K_YELLOW}┃${K_RESET} ${K_WHITE}[15]${K_RESET} 🗑️  UNINSTALL        ${K_WHITE}[16]${K_RESET} ⚡ FAST DNS MENU     ${K_YELLOW}┃${K_RESET}"
+printf '%b\n' "${K_YELLOW}┃${K_RESET} ${K_WHITE}[15]${K_RESET} 🗑️  UNINSTALL        ${K_WHITE}[16]${K_RESET} ⚡ FAST DNS MENU    ${K_YELLOW}┃${K_RESET}"
 printf '%b\n' "${K_YELLOW}┗━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┛${K_RESET}"
 
 echo
 
-# =========================
-# WEB PANEL
-# =========================
-
+# --- Panneau Web ---
 printf '%b\n' "${K_BLUE}┏━━━━━━━━━━━━━━━━ 🖥️  WEB PANEL TOM_TUNNEL ━━━━━━━━━━━━━━━━┓${K_RESET}"
 printf '%b\n' "${K_BLUE}┃${K_RESET} ${K_WHITE}[18]${K_RESET} 🌍 TOM_TUNNEL TUNNEL WEB                              ${K_BLUE}┃${K_RESET}"
 printf '%b\n' "${K_BLUE}┗━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┛${K_RESET}"
 
 echo
 
-# =========================
-# SYSTEM
-# =========================
-
+# --- Système ---
 printf '%b\n' "${K_MAGENTA}┏━━━━━━━━━━━━━━━━━━━━ ⚙️  SYSTEM ━━━━━━━━━━━━━━━━━━━━━━━━┓${K_RESET}"
 printf '%b\n' "${K_MAGENTA}┃${K_RESET} ${K_WHITE}[00]${K_RESET} 🚪 EXIT              ${K_WHITE}[88]${K_RESET} 🔄 REBOOT VPS       ${K_MAGENTA}┃${K_RESET}"
 printf '%b\n' "${K_MAGENTA}┃${K_RESET} ${K_WHITE}[99]${K_RESET} 🔃 UPDATE TOM_TUNNEL                                  ${K_MAGENTA}┃${K_RESET}"
