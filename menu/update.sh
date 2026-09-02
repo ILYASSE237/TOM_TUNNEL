@@ -1,7 +1,7 @@
 #!/bin/bash
 set -u
 UI="/usr/local/lib/tom_tunnel-ui.sh"; [ -f "$UI" ] && source "$UI"
-SERVER_HOST="https://raw.githubusercontent.com/abesskamer237/TOM_TUNNEL/main"
+SERVER_HOST="https://raw.githubusercontent.com/ILYASS237/TOM_TUNNEL/main"
 TMP_DIR="$(mktemp -d /tmp/tom_tunnel-update.XXXXXX)"
 trap 'rm -rf "$TMP_DIR"' EXIT
 
