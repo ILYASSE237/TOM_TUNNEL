@@ -10,7 +10,7 @@ This package was adapted directly from the supplied `nexTPro-ScriptAll-main.zip`
 
 ## Adapted
 - Project identity: **TOM_TUNNEL**.
-- Repository endpoints: `ILYASSSE237/TOM_TUNNEL`.
+- Repository endpoints: `ILYASSE237/TOM_TUNNEL`.
 - Project-owned service/path names: `tom_tunnel-*`.
 - Web panel branding and project paths.
 - Cameroon/Yaoundé timezone: `Africa/Douala`.
@@ -27,4 +27,4 @@ This package was adapted directly from the supplied `nexTPro-ScriptAll-main.zip`
 - No remaining project-owned references to `RootNexTPro`, `nexTPro-ScriptAll`, `Tom_Tunnel Tunnel Pro`, `tom_tunnel-web`, or `nexus_bot` were found outside excluded upstream/binary data.
 
 ## Important
-Static checks do not replace a real VPS installation test. Network-dependent protocol binaries, certificates, DNS records and provider-specific firewall behavior must still be validated on the target VPS.
+Static checks do not replace a real VPS installation test. Network-dependent protocol binaries, certificates, DNS records and provider-specific firewall behavior must still be validated on the target infrastructure.
