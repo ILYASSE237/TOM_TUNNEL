@@ -27,45 +27,120 @@ mark(){
 K_GREEN="${K_GREEN:-\033[0;32m}"; K_RED="${K_RED:-\033[1;31m}"; K_CYAN="${K_CYAN:-\033[0;36m}"
 K_YELLOW="${K_YELLOW:-\033[1;33m}"; K_WHITE="${K_WHITE:-\033[1;37m}"; K_DIM="${K_DIM:-\033[2m}"; K_RESET="${K_RESET:-\033[0m}"
 
+# ─────────────────────────────────────────────────────────────────
+# Helper functions for new box style
+# ─────────────────────────────────────────────────────────────────
+
+# Remove ANSI color codes to compute visible length
+strip_ansi() {
+  printf '%b' "$1" | sed -r 's/\x1B\[[0-9;]*[mK]//g'
+}
+
+# Pad string to given visible width (counting only visible chars)
+pad_visible() {
+  local str="$1" width="$2"
+  local visible=$(strip_ansi "$str")
+  local len=${#visible}
+  if [ $len -lt $width ]; then
+    local pad=$((width - len))
+    str+="$(printf '%*s' $pad '')"
+  fi
+  printf '%b' "$str"
+}
+
+# Center text within a fixed width
+center_text() {
+  local text="$1" width="$2"
+  local visible=$(strip_ansi "$text")
+  local len=${#visible}
+  local left=$(( (width - len) / 2 ))
+  local right=$(( width - len - left ))
+  printf '%*s%s%*s' $left '' "$text" $right ''
+}
+
+# Build a line with two options: [num1] label1  [num2] label2
+menu_line() {
+  local num1="$1" label1="$2" num2="$3" label2="$4"
+  local col_width=29   # width for each column (after number + space)
+  local left="[$(printf '%02d' $num1)] ${label1}"
+  local right="[$(printf '%02d' $num2)] ${label2}"
+  left=$(pad_visible "$left" $col_width)
+  right=$(pad_visible "$right" $col_width)
+  printf '┃ %b  %b ┃\n' "$left" "$right"
+}
+
+# ─────────────────────────────────────────────────────────────────
+# Display new menu
+# ─────────────────────────────────────────────────────────────────
+
 clear
-printf '%b\n' "${K_CYAN}╔══════════════════════════════════════╗${K_RESET}"
-printf '%b\n' "${K_CYAN}║${K_RESET}        ${K_WHITE}🚀 TOM_TUNNEL${K_RESET}                 ${K_CYAN}║${K_RESET}"
-printf '%b\n' "${K_CYAN}╠══════════════════════════════════════╣${K_RESET}"
-printf '%b\n' "${K_CYAN}║${K_RESET} 🖥️  OS      : ${K_GREEN}$(printf '%-20s' "${OS:0:20}")${K_RESET}${K_CYAN}║${K_RESET}"
-printf '%b\n' "${K_CYAN}║${K_RESET} 🌐 IPv4    : ${K_GREEN}$(printf '%-20s' "${MYIP:-N/A}")${K_RESET}${K_CYAN}║${K_RESET}"
-printf '%b\n' "${K_CYAN}║${K_RESET} 🌍 IPv6    : ${K_GREEN}$(printf '%-20s' "${IPV6:-N/A}")${K_RESET}${K_CYAN}║${K_RESET}"
-printf '%b\n' "${K_CYAN}║${K_RESET} 🔗 DOMAIN  : ${K_GREEN}$(printf '%-20s' "${domain:0:20}")${K_RESET}${K_CYAN}║${K_RESET}"
-printf '%b\n' "${K_CYAN}║${K_RESET} ⏱️  UPTIME  : ${K_GREEN}$(printf '%-20s' "${uptime:0:20}")${K_RESET}${K_CYAN}║${K_RESET}"
-printf '%b\n' "${K_CYAN}╚══════════════════════════════════════╝${K_RESET}"
+
+# --- Top info box (╭─╮ style) ---
+INNER_WIDTH=68  # width of content between left │ and right │
+
+# Prepare values
+os_info="${OS:-N/A} ${VER:-}"
+ipv4="${MYIP:-N/A}"
+ipv6="${IPV6:-N/A}"
+dom="${domain:-N/A}"
+up="${uptime:-N/A}"
+ver="${INSTALLED_VERSION:-1.0.0}"
+
+# Services status line
+svc_xray=$(mark xray)
+svc_ssh=$(mark dropbear 2>/dev/null || mark ssh)
+svc_web=$(mark tom_tunnel-web 2>/dev/null || echo -e "${K_DIM}—${K_RESET}")
+svc_zivpn=$(mark zivpn 2>/dev/null)
+services_line="Xray ${svc_xray} • SSH ${svc_ssh} • Web ${svc_web} • ZIVPN ${svc_zivpn}"
+
+# Top border
+printf '╭────────────────────────────────────────────────────────────────╮\n'
+printf '│ %-68s │\n' "🖥️  VPS       : ${os_info}"
+printf '│ %-68s │\n' "🌐 IPv4      : ${ipv4}"
+printf '│ %-68s │\n' "🌍 IPv6      : ${ipv6}"
+printf '│ %-68s │\n' "🔗 DOMAIN    : ${dom}"
+printf '│ %-68s │\n' "⏱️  UPTIME   : ${up}"
+printf '│ %-68s │\n' "📦 VERSION   : ${ver}"
+printf '│ %-68s │\n' "⚡ SERVICES  : ${services_line}"
+printf '╰────────────────────────────────────────────────────────────────╯\n'
 echo
-printf '%b\n' "${K_YELLOW}🔐 PROTOCOLS${K_RESET}"
-printf '%b\n' "  ${K_CYAN}[01]${K_RESET} 🔑 SSH/WS          $(mark dropbear 2>/dev/null || mark ssh)"
-printf '%b\n' "  ${K_CYAN}[02]${K_RESET} ⚡ VMESS           $(mark xray)"
-printf '%b\n' "  ${K_CYAN}[03]${K_RESET} 🚀 VLESS           $(mark xray)"
-printf '%b\n' "  ${K_CYAN}[04]${K_RESET} 🛡️  TROJAN          $(mark xray)"
-printf '%b\n' "  ${K_CYAN}[05]${K_RESET} 🌐 SOCKS           $(mark xray)"
-printf '%b\n' "  ${K_CYAN}[06]${K_RESET} 📡 ZIVPN           $(mark zivpn)"
+
+# --- Protocols Section ---
+title="🚀 MENU TOM_TUNNEL"
+printf '┏━━━━━━━━━━━━━━━━━━ %s ━━━━━━━━━━━━━━━━━━━━┓\n' "$(center_text "$title" 40)"
+menu_line 1 "🔐 SSH/WS" 2 "🌐 VMESS"
+menu_line 3 "🛡️  VLESS" 4 "🔥 TROJAN"
+menu_line 5 "🧦 SOCKS" 6 "⚡ ZIVPN"
+printf '┗━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┛\n'
 echo
-printf '%b\n' "${K_YELLOW}🛠️  TOOLS${K_RESET}"
-printf '%b\n' "  ${K_CYAN}[07]${K_RESET} 🌐 DNS PANEL"
-printf '%b\n' "  ${K_CYAN}[08]${K_RESET} 🔗 DOMAIN PANEL"
-printf '%b\n' "  ${K_CYAN}[09]${K_RESET} 🌍 IPV6 PANEL"
-printf '%b\n' "  ${K_CYAN}[10]${K_RESET} 📊 VPS STATUS"
-printf '%b\n' "  ${K_CYAN}[11]${K_RESET} 🛡️  NETGUARD PANEL"
-printf '%b\n' "  ${K_CYAN}[12]${K_RESET} 🔌 VPN PORT INFO"
-printf '%b\n' "  ${K_CYAN}[13]${K_RESET} 🧹 CLEAN VPS LOGS"
-printf '%b\n' "  ${K_CYAN}[14]${K_RESET} 🤖 TOM_TUNNEL BOT PANEL"
-printf '%b\n' "  ${K_CYAN}[15]${K_RESET} 🗑️  UNINSTALL TOM_TUNNEL"
-printf '%b\n' "  ${K_CYAN}[16]${K_RESET} ⚡ FAST DNS MENU"
+
+# --- Tools Section ---
+title="🛠️  TOOLS TOM_TUNNEL"
+printf '┏━━━━━━━━━━━━━━━━━━ %s ━━━━━━━━━━━━━━━━━━━━┓\n' "$(center_text "$title" 40)"
+menu_line 7 "📡 DNS PANEL" 8 "🌐 DOMAIN PANEL"
+menu_line 9 "6️⃣ IPV6 PANEL" 10 "📊 VPS STATUS"
+menu_line 11 "🛡️ NETGUARD PANEL" 12 "🔌 VPN PORT INFO"
+menu_line 13 "🧹 CLEAN VPN LOGS" 14 "🤖 TOM_TUNNEL BOT PANEL"
+menu_line 15 "🗑️ UNINSTALL" 16 "⚡ FAST DNS MENU"
+printf '┗━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┛\n'
 echo
-printf '%b\n' "${K_YELLOW}🌐 WEB PANEL${K_RESET}"
-printf '%b\n' "  ${K_CYAN}[18]${K_RESET} 🖥️  TOM_TUNNEL WEB  $(mark tom_tunnel-web 2>/dev/null || echo -e "${K_DIM}—${K_RESET}")"
+
+# --- Web Panel Section ---
+title="🖥️  WEB PANEL TOM_TUNNEL"
+printf '┏━━━━━━━━━━━━━━━━━━ %s ━━━━━━━━━━━━━━━━━━━━┓\n' "$(center_text "$title" 40)"
+printf '┃ %-66s ┃\n' "18. 🌍 TOM_TUNNEL TUNNEL WEB"
+printf '┗━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┛\n'
 echo
-printf '%b\n' "${K_YELLOW}⚙️  SYSTEM${K_RESET}"
-printf '%b\n' "  ${K_CYAN}[00]${K_RESET} 🚪 EXIT"
-printf '%b\n' "  ${K_CYAN}[88]${K_RESET} 🔄 REBOOT VPS"
-printf '%b\n' "  ${K_CYAN}[99]${K_RESET} 🔃 UPDATE TOM_TUNNEL"
+
+# --- System Section ---
+title="⚙️  SYSTEM"
+printf '┏━━━━━━━━━━━━━━━━━━ %s ━━━━━━━━━━━━━━━━━━━━┓\n' "$(center_text "$title" 40)"
+menu_line 0 "🚪 EXIT" 88 "🔄 REBOOT VPS"
+printf '┃ %-66s ┃\n' "99. 🔃 UPDATE TOM_TUNNEL"
+printf '┗━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┛\n'
 echo
+
+# Version & update info
 printf '%b\n' "${K_DIM}Version : ${INSTALLED_VERSION}${K_RESET}"
 if [ "$UPDATE_AVAILABLE" -eq 1 ]; then
   printf '%b\n' "${K_RED}⚡ UPDATE AVAILABLE : v${LATEST_VERSION}${K_RESET}"
