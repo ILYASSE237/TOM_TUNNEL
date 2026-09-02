@@ -29,7 +29,7 @@ rm -rf /usr/local/go /usr/bin/go /root/go1.22.0.linux-amd64.tar.gz
 # Téléchargement + extraction
 cd /root || exit 1
 wget -q --timeout=30 --tries=3 https://go.dev/dl/go1.22.0.linux-amd64.tar.gz -O /root/go1.22.0.linux-amd64.tar.gz || {
-    echo -e "\( {RD}[ERROR] Impossible de télécharger Go \){NC}"
+    echo -e "${RD}[ERROR] Impossible de télécharger Go${NC}"
     exit 1
 }
 
@@ -42,7 +42,7 @@ echo 'export PATH="/usr/local/go/bin:$PATH"' >> /root/.bashrc
 
 # Vérification
 if ! command -v go &>/dev/null; then
-    echo -e "\( {RD}[ERROR] Go n'est pas installé correctement \){NC}"
+    echo -e "${RD}[ERROR] Go n'est pas installé correctement${NC}"
     exit 1
 fi
 go version
@@ -53,7 +53,7 @@ install_slowdns() {
 
     echo "[*] Cloning dnstt..."
     git clone https://www.bamsoftware.com/git/dnstt.git || {
-        echo -e "\( {RD}[ERROR] Impossible de cloner dnstt \){NC}"
+        echo -e "${RD}[ERROR] Impossible de cloner dnstt${NC}"
         exit 1
     }
 
@@ -61,7 +61,7 @@ install_slowdns() {
     rm -f go.sum
     go mod tidy
     go build -o dnstt-server || {
-        echo -e "\( {RD}[ERROR] Échec de la compilation de dnstt-server \){NC}"
+        echo -e "${RD}[ERROR] Échec de la compilation de dnstt-server${NC}"
         exit 1
     }
 
@@ -75,10 +75,10 @@ install_slowdns() {
         -pubkey-file /etc/slowdns/server.pub
 
     clear
-    echo -e "\( {LN}┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┓ \){NC}"
-    echo -e "\( {LN}┃ \){NC} ${BG}                 DOMAIN PANEL                   ${NC} \( {LN}┃ \){NC}"
-    echo -e "\( {LN}┗━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┛ \){NC}"
-    echo -e "\( {LN}●━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━● \){NC}"
+    echo -e "${LN}┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┓${NC}"
+    echo -e "${LN}┃${NC} ${BG}                 DOMAIN PANEL                   ${NC} ${LN}┃${NC}"
+    echo -e "${LN}┗━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┛${NC}"
+    echo -e "${LN}●━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━●${NC}"
     echo
 
     while true; do
@@ -89,7 +89,7 @@ install_slowdns() {
         fi
 
         if [[ -z "$Nameserver" ]]; then
-            echo -e "\( {RD}NS Domain cannot be empty. Please enter a value. \){NC}"
+            echo -e "${RD}NS Domain cannot be empty. Please enter a value.${NC}"
         else
             break
         fi
@@ -130,9 +130,9 @@ END
     # Vérification du service
     sleep 2
     if systemctl is-active --quiet dnstt; then
-        echo -e "\( {GR}[✔] Service dnstt démarré avec succès \){NC}"
+        echo -e "${GR}[✔] Service dnstt démarré avec succès${NC}"
     else
-        echo -e "\( {RD}[✘] Échec du démarrage de dnstt \){NC}"
+        echo -e "${RD}[✘] Échec du démarrage de dnstt${NC}"
         systemctl status dnstt --no-pager
     fi
 
@@ -146,7 +146,7 @@ install_firewall() {
     interface=$(ip route get 8.8.8.8 2>/dev/null | awk '/dev/ {print $5; exit}')
 
     if [[ -z "$interface" ]]; then
-        echo -e "\( {RD}[ERROR] Impossible de détecter l'interface réseau \){NC}"
+        echo -e "${RD}[ERROR] Impossible de détecter l'interface réseau${NC}"
         return 1
     fi
 
@@ -170,7 +170,7 @@ install_firewall
 
 echo ""
 rm -rf /root/dnstt
-echo -e "\( {GR} SlowDNS Autoscript installation completed! \){NC}"
+echo -e "${GR} SlowDNS Autoscript installation completed!${NC}"
 echo ""
 echo -e "Nameserver : $(cat /etc/slowdns/nsdomain 2>/dev/null)"
 echo -e "Public Key : $(cat /etc/slowdns/server.pub 2>/dev/null)"
