@@ -1,8 +1,8 @@
 #!/bin/bash
-# ╔══════════════════════════════════════════════════════════════╗
-# ║                  TOM_TUNNEL — MAIN MENU                    ║
-# ║            PREMIUM MULTI-PROTOCOL VPS PANEL                ║
-# ╚══════════════════════════════════════════════════════════════╝
+# ==============================================================
+# TOM_TUNNEL — Premium Multi-Protocol VPS Control Panel
+# Presented by JOEL TOM
+# ==============================================================
 
 UI="/usr/local/lib/tom_tunnel-ui.sh"
 [ -f "$UI" ] && source "$UI"
@@ -19,8 +19,6 @@ uptime="$(uptime -p 2>/dev/null | cut -d ' ' -f 2-10 || echo "N/A")"
 
 VERSION_FILE="/etc/version"
 INSTALLED_VERSION=$(cat "$VERSION_FILE" 2>/dev/null || echo "1.0.0")
-
-readonly SERVER_HOST="https://raw.githubusercontent.com/ILYASSSE237/TOM_TUNNEL/main"
 
 LATEST_VERSION=$(curl -fsS --max-time 4 \
 "$SERVER_HOST/version" 2>/dev/null || echo "$INSTALLED_VERSION")
@@ -76,158 +74,129 @@ mark(){
 }
 
 # =========================
-# SCREEN
+# DISPLAY
 # =========================
 
 clear
 
-# =========================
-# TOM_TUNNEL BANNER
-# =========================
+# ==============================================================
+# TOM_TUNNEL PREMIUM BANNER
+# ==============================================================
 
 printf '%b\n' "${K_CYAN}╔══════════════════════════════════════════════════════════════════════════╗${K_RESET}"
 printf '%b\n' "${K_CYAN}║${K_RESET}                                                                      ${K_CYAN}║${K_RESET}"
-printf '%b\n' "${K_CYAN}║${K_RESET}   ${K_CYAN}████████╗ ██████╗ ███╗   ███╗${K_RESET}       ${K_CYAN}████████╗██╗   ██╗${K_RESET}      ${K_CYAN}║${K_RESET}"
-printf '%b\n' "${K_CYAN}║${K_RESET}   ${K_CYAN}╚══██╔══╝██╔═══██╗████╗ ████║${K_RESET}       ${K_CYAN}╚══██╔══╝██║   ██║${K_RESET}      ${K_CYAN}║${K_RESET}"
-printf '%b\n' "${K_CYAN}║${K_RESET}      ${K_CYAN}██║   ██║   ██║██╔████╔██║${K_RESET}          ${K_CYAN}██║   ██║   ██║${K_RESET}      ${K_CYAN}║${K_RESET}"
-printf '%b\n' "${K_CYAN}║${K_RESET}      ${K_CYAN}██║   ██║   ██║██║╚██╔╝██║${K_RESET}          ${K_CYAN}██║   ██║   ██║${K_RESET}      ${K_CYAN}║${K_RESET}"
-printf '%b\n' "${K_CYAN}║${K_RESET}      ${K_CYAN}██║   ╚██████╔╝██║ ╚═╝ ██║${K_RESET}          ${K_CYAN}██║   ╚██████╔╝${K_RESET}      ${K_CYAN}║${K_RESET}"
-printf '%b\n' "${K_CYAN}║${K_RESET}      ${K_CYAN}╚═╝    ╚═════╝ ╚═╝     ╚═╝${K_RESET}          ${K_CYAN}╚═╝    ╚═════╝${K_RESET}       ${K_CYAN}║${K_RESET}"
+printf '%b\n' "${K_CYAN}║${K_RESET}       ${K_CYAN}████████╗ ██████╗ ███╗   ███╗${K_RESET}                         ${K_CYAN}║${K_RESET}"
+printf '%b\n' "${K_CYAN}║${K_RESET}       ${K_CYAN}╚══██╔══╝██╔═══██╗████╗ ████║${K_RESET}                         ${K_CYAN}║${K_RESET}"
+printf '%b\n' "${K_CYAN}║${K_RESET}          ${K_CYAN}██║   ██║   ██║██╔████╔██║${K_RESET}                         ${K_CYAN}║${K_RESET}"
+printf '%b\n' "${K_CYAN}║${K_RESET}          ${K_CYAN}██║   ██║   ██║██║╚██╔╝██║${K_RESET}                         ${K_CYAN}║${K_RESET}"
+printf '%b\n' "${K_CYAN}║${K_RESET}          ${K_CYAN}██║   ╚██████╔╝██║ ╚═╝ ██║${K_RESET}                         ${K_CYAN}║${K_RESET}"
+printf '%b\n' "${K_CYAN}║${K_RESET}          ${K_CYAN}╚═╝    ╚═════╝ ╚═╝     ╚═╝${K_RESET}                         ${K_CYAN}║${K_RESET}"
 printf '%b\n' "${K_CYAN}║${K_RESET}                                                                      ${K_CYAN}║${K_RESET}"
-printf '%b\n' "${K_CYAN}║${K_RESET}             ${K_WHITE}★ PREMIUM MULTI-PROTOCOL VPS CONTROL PANEL ★${K_RESET}           ${K_CYAN}║${K_RESET}"
+printf '%b\n' "${K_CYAN}║${K_RESET}                    ${K_WHITE}TOM_TUNNEL${K_RESET}                               ${K_CYAN}║${K_RESET}"
+printf '%b\n' "${K_CYAN}║${K_RESET}             ${K_MAGENTA}★ PRESENTED BY JOEL TOM ★${K_RESET}                         ${K_CYAN}║${K_RESET}"
+printf '%b\n' "${K_CYAN}║${K_RESET}                  ${K_YELLOW}VERSION ${INSTALLED_VERSION}${K_RESET}                            ${K_CYAN}║${K_RESET}"
+printf '%b\n' "${K_CYAN}║${K_RESET}          ${K_DIM}PREMIUM MULTI-PROTOCOL VPS CONTROL PANEL${K_RESET}              ${K_CYAN}║${K_RESET}"
 printf '%b\n' "${K_CYAN}║${K_RESET}                                                                      ${K_CYAN}║${K_RESET}"
 printf '%b\n' "${K_CYAN}╚══════════════════════════════════════════════════════════════════════════╝${K_RESET}"
 
 echo
 
-# =========================
-# SERVER INFO
-# =========================
+# ==============================================================
+# SERVER INFORMATION
+# ==============================================================
 
-printf '%b\n' "${K_CYAN}╔═══════════════════════[ SERVER INFORMATION ]════════════════════════════╗${K_RESET}"
-
-printf '%b\n' "${K_CYAN}║${K_RESET}  🖥️  OS        : ${K_GREEN}${OS}${K_RESET}"
-
-printf '%b\n' "${K_CYAN}║${K_RESET}  🌐 IPv4      : ${K_GREEN}${MYIP:-N/A}${K_RESET}"
-
-printf '%b\n' "${K_CYAN}║${K_RESET}  🌍 IPv6      : ${K_GREEN}${IPV6:-N/A}${K_RESET}"
-
-printf '%b\n' "${K_CYAN}║${K_RESET}  🔗 DOMAIN    : ${K_GREEN}${domain:-N/A}${K_RESET}"
-
-printf '%b\n' "${K_CYAN}║${K_RESET}  ⏱️  UPTIME    : ${K_GREEN}${uptime:-N/A}${K_RESET}"
-
-printf '%b\n' "${K_CYAN}║${K_RESET}  📦 VERSION   : ${K_GREEN}${INSTALLED_VERSION}${K_RESET}"
-
+printf '%b\n' "${K_CYAN}╔══════════════════════[ 🖥 SERVER INFORMATION ]══════════════════════════╗${K_RESET}"
+printf '%b\n' "${K_CYAN}║${K_RESET}                                                                      ${K_CYAN}║${K_RESET}"
+printf '%b\n' "${K_CYAN}║${K_RESET}   🖥️  VPS OS       : ${K_GREEN}${OS}${K_RESET}"
+printf '%b\n' "${K_CYAN}║${K_RESET}   🌐 IPv4         : ${K_GREEN}${MYIP:-N/A}${K_RESET}"
+printf '%b\n' "${K_CYAN}║${K_RESET}   🌍 IPv6         : ${K_GREEN}${IPV6:-N/A}${K_RESET}"
+printf '%b\n' "${K_CYAN}║${K_RESET}   🔗 DOMAIN       : ${K_GREEN}${domain:-N/A}${K_RESET}"
+printf '%b\n' "${K_CYAN}║${K_RESET}   ⏱️  UPTIME       : ${K_GREEN}${uptime:-N/A}${K_RESET}"
+printf '%b\n' "${K_CYAN}║${K_RESET}                                                                      ${K_CYAN}║${K_RESET}"
 printf '%b\n' "${K_CYAN}╚══════════════════════════════════════════════════════════════════════════╝${K_RESET}"
 
 echo
 
-# =========================
+# ==============================================================
 # SERVICES
-# =========================
+# ==============================================================
 
-printf '%b\n' "${K_BLUE}╔════════════════════════════[ SERVICES ]══════════════════════════════════╗${K_RESET}"
-
-printf '%b\n' "${K_BLUE}║${K_RESET}  ⚡ XRAY      : $(mark xray)${K_RESET}"
-
-printf '%b\n' "${K_BLUE}║${K_RESET}  🌐 NGINX     : $(mark nginx)${K_RESET}"
-
-printf '%b\n' "${K_BLUE}║${K_RESET}  🔐 SSH       : $(mark ssh)${K_RESET}"
-
-printf '%b\n' "${K_BLUE}║${K_RESET}  📡 ZIVPN     : $(mark zivpn)${K_RESET}"
-
+printf '%b\n' "${K_BLUE}╔════════════════════════════[ ⚡ SERVICES ]═══════════════════════════════╗${K_RESET}"
+printf '%b\n' "${K_BLUE}║${K_RESET}                                                                      ${K_BLUE}║${K_RESET}"
+printf '%b\n' "${K_BLUE}║${K_RESET}   ⚡ XRAY       : $(mark xray)"
+printf '%b\n' "${K_BLUE}║${K_RESET}   🌐 NGINX      : $(mark nginx)"
+printf '%b\n' "${K_BLUE}║${K_RESET}   🔐 SSH        : $(mark ssh)"
+printf '%b\n' "${K_BLUE}║${K_RESET}   📡 ZIVPN      : $(mark zivpn)"
+printf '%b\n' "${K_BLUE}║${K_RESET}                                                                      ${K_BLUE}║${K_RESET}"
 printf '%b\n' "${K_BLUE}╚══════════════════════════════════════════════════════════════════════════╝${K_RESET}"
 
 echo
 
-# =========================
+# ==============================================================
 # PROTOCOLS
-# =========================
+# ==============================================================
 
-printf '%b\n' "${K_MAGENTA}╔═══════════════════════[ 🚀 PROTOCOLS ]═══════════════════════════════════╗${K_RESET}"
-
+printf '%b\n' "${K_MAGENTA}╔═══════════════════════[ 🚀 PROTOCOLS ]══════════════════════════════════╗${K_RESET}"
 printf '%b\n' "${K_MAGENTA}║${K_RESET}                                                                      ${K_MAGENTA}║${K_RESET}"
-
 printf '%b\n' "${K_MAGENTA}║${K_RESET}   ${K_CYAN}[01]${K_RESET} 🔐 SSH / WS          ${K_CYAN}[02]${K_RESET} ⚡ VMESS                ${K_MAGENTA}║${K_RESET}"
-
 printf '%b\n' "${K_MAGENTA}║${K_RESET}   ${K_CYAN}[03]${K_RESET} 🛡️  VLESS             ${K_CYAN}[04]${K_RESET} 🔥 TROJAN               ${K_MAGENTA}║${K_RESET}"
-
 printf '%b\n' "${K_MAGENTA}║${K_RESET}   ${K_CYAN}[05]${K_RESET} 🌐 SOCKS              ${K_CYAN}[06]${K_RESET} ⚡ ZIVPN                 ${K_MAGENTA}║${K_RESET}"
-
 printf '%b\n' "${K_MAGENTA}║${K_RESET}                                                                      ${K_MAGENTA}║${K_RESET}"
-
 printf '%b\n' "${K_MAGENTA}╚══════════════════════════════════════════════════════════════════════════╝${K_RESET}"
 
 echo
 
-# =========================
+# ==============================================================
 # TOOLS
-# =========================
+# ==============================================================
 
 printf '%b\n' "${K_YELLOW}╔═══════════════════════════[ 🛠 TOOLS ]═══════════════════════════════════╗${K_RESET}"
-
 printf '%b\n' "${K_YELLOW}║${K_RESET}                                                                      ${K_YELLOW}║${K_RESET}"
-
 printf '%b\n' "${K_YELLOW}║${K_RESET}   ${K_CYAN}[07]${K_RESET} 🌐 DNS PANEL          ${K_CYAN}[08]${K_RESET} 🔗 DOMAIN PANEL        ${K_YELLOW}║${K_RESET}"
-
 printf '%b\n' "${K_YELLOW}║${K_RESET}   ${K_CYAN}[09]${K_RESET} 🌍 IPV6 PANEL         ${K_CYAN}[10]${K_RESET} 📊 VPS STATUS          ${K_YELLOW}║${K_RESET}"
-
 printf '%b\n' "${K_YELLOW}║${K_RESET}   ${K_CYAN}[11]${K_RESET} 🛡️  NETGUARD PANEL     ${K_CYAN}[12]${K_RESET} 🔌 VPN PORT INFO       ${K_YELLOW}║${K_RESET}"
-
 printf '%b\n' "${K_YELLOW}║${K_RESET}   ${K_CYAN}[13]${K_RESET} 🧹 CLEAN VPS LOGS      ${K_CYAN}[14]${K_RESET} 🤖 TOM_TUNNEL BOT      ${K_YELLOW}║${K_RESET}"
-
 printf '%b\n' "${K_YELLOW}║${K_RESET}   ${K_CYAN}[15]${K_RESET} 🗑️  UNINSTALL           ${K_CYAN}[16]${K_RESET} ⚡ FAST DNS MENU        ${K_YELLOW}║${K_RESET}"
-
 printf '%b\n' "${K_YELLOW}║${K_RESET}                                                                      ${K_YELLOW}║${K_RESET}"
-
 printf '%b\n' "${K_YELLOW}╚══════════════════════════════════════════════════════════════════════════╝${K_RESET}"
 
 echo
 
-# =========================
+# ==============================================================
 # WEB PANEL
-# =========================
+# ==============================================================
 
 printf '%b\n' "${K_GREEN}╔══════════════════════════[ 🌐 WEB PANEL ]════════════════════════════════╗${K_RESET}"
-
 printf '%b\n' "${K_GREEN}║${K_RESET}                                                                      ${K_GREEN}║${K_RESET}"
-
-printf '%b\n' "${K_GREEN}║${K_RESET}   ${K_CYAN}[18]${K_RESET} 🖥️  TOM_TUNNEL WEB      $(mark tom_tunnel-web 2>/dev/null || echo -e "${K_DIM}● UNKNOWN${K_RESET}")"
-
+printf '%b\n' "${K_GREEN}║${K_RESET}   ${K_CYAN}[18]${K_RESET} 🖥️  TOM_TUNNEL WEB     $(mark tom_tunnel-web 2>/dev/null || echo -e "${K_DIM}● UNKNOWN${K_RESET}")"
 printf '%b\n' "${K_GREEN}║${K_RESET}                                                                      ${K_GREEN}║${K_RESET}"
-
 printf '%b\n' "${K_GREEN}╚══════════════════════════════════════════════════════════════════════════╝${K_RESET}"
 
 echo
 
-# =========================
+# ==============================================================
 # SYSTEM
-# =========================
+# ==============================================================
 
 printf '%b\n' "${K_RED}╔════════════════════════════[ ⚙ SYSTEM ]══════════════════════════════════╗${K_RESET}"
-
 printf '%b\n' "${K_RED}║${K_RESET}                                                                      ${K_RED}║${K_RESET}"
-
 printf '%b\n' "${K_RED}║${K_RESET}   ${K_CYAN}[88]${K_RESET} 🔄 REBOOT VPS         ${K_CYAN}[99]${K_RESET} 🔃 UPDATE TOM_TUNNEL   ${K_RED}║${K_RESET}"
-
 printf '%b\n' "${K_RED}║${K_RESET}   ${K_CYAN}[00]${K_RESET} 🚪 EXIT                                                        ${K_RED}║${K_RESET}"
-
 printf '%b\n' "${K_RED}║${K_RESET}                                                                      ${K_RED}║${K_RESET}"
-
 printf '%b\n' "${K_RED}╚══════════════════════════════════════════════════════════════════════════╝${K_RESET}"
 
 echo
 
-# =========================
-# UPDATE STATUS
-# =========================
+# ==============================================================
+# FOOTER
+# ==============================================================
 
-printf '%b\n' "${K_DIM}                 TOM_TUNNEL • Premium VPS Control Panel${K_RESET}"
+printf '%b\n' "${K_DIM}              ──────── TOM_TUNNEL • JOEL TOM ────────${K_RESET}"
 
 if [ "$UPDATE_AVAILABLE" -eq 1 ]; then
-    printf '%b\n' "${K_RED}                 ⚡ UPDATE AVAILABLE → v${LATEST_VERSION}${K_RESET}"
+    printf '%b\n' "${K_RED}              ⚡ UPDATE AVAILABLE → v${LATEST_VERSION}${K_RESET}"
 else
-    printf '%b\n' "${K_GREEN}                 ✓ TOM_TUNNEL IS UP TO DATE${K_RESET}"
+    printf '%b\n' "${K_GREEN}              ✓ TOM_TUNNEL IS UP TO DATE${K_RESET}"
 fi
 
 echo
@@ -236,11 +205,12 @@ printf '%b' "${K_GREEN}╭─[ TOM_TUNNEL ]─[ SELECT OPTION ] » ${K_RESET}"
 read -r opt
 echo
 
-# =========================
+# ==============================================================
 # MENU ACTIONS
-# =========================
+# ==============================================================
 
 case "$opt" in
+
   1|01)
       clear
       /usr/local/sbin/ssh 2>/dev/null || bash "$(dirname "$0")/ssh.sh"
@@ -343,6 +313,7 @@ case "$opt" in
       printf '%b\n' "${K_RED}╰─[ ERROR ] Invalid option.${K_RESET}"
       sleep 1
       ;;
+
 esac
 
 exec /usr/local/sbin/menu
